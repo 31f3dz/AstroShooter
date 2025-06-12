@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     float axisH, axisV; // 横軸、縦軸
 
     public float speed = 3.0f; // スピード
-    public float angleZ; // 角度
+    public float angleZ = -90.0f; // 角度
     int direction = 0; // アニメの方向番号
 
     public static int hp = 5; // プレイヤーの体力
@@ -42,6 +42,13 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (inDamage)
+        {
+            // 点滅処理
+
+            return;
+        }
+
         // 斜めを縦・横に合わせる
         rbody.velocity = new Vector2(axisH, axisV).normalized * speed;
     }
@@ -51,12 +58,24 @@ public class PlayerController : MonoBehaviour
         angleZ = GetAngle();
 
         // アニメ番号を一時記録
-        int dir;
+        int dir = direction;
 
-        if (angleZ > -135 && angleZ < -45) dir = 0; // 下
-        else if (angleZ >= -45 && angleZ <= 45) dir = 3; // 右
-        else if (angleZ > 45 && angleZ < 135) dir = 1; // 上
-        else dir = 2; // 左
+        // if (angleZ > -135 && angleZ < -45) dir = 0; // 下
+        // else if (angleZ >= -45 && angleZ <= 45) dir = 3; // 右
+        // else if (angleZ > 45 && angleZ < 135) dir = 1; // 上
+        // else dir = 2; // 左
+
+        //左右キーが押されたら
+        if (Mathf.Abs(h) >= Mathf.Abs(v))
+        {
+            if (h > 0) dir = 3;       // 右
+            else if (h < 0) dir = 2;  // 左
+        }
+        else //左右キーが押されなかったら
+        {
+            if (v > 0) dir = 1;       // 上
+            else if (v < 0) dir = 0;  // 下
+        }
 
         // 前フレームのdirectionとアニメ番号が異なっていなければそのまま
         if (dir != direction)
@@ -91,5 +110,50 @@ public class PlayerController : MonoBehaviour
         }
 
         return angle;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            // ダメージメソッドの発動
+            GetDamage(collision.gameObject);
+        }
+    }
+
+    // ダメージメソッド
+    void GetDamage(GameObject enemy)
+    {
+        hp--; // 体力を減らす
+
+        if (hp > 0)
+        {
+            // 動きが止まる
+            rbody.velocity = Vector2.zero;
+
+            // ノックバック(方角計算、AddForceで飛ぶ)
+            // プレイヤー位置 - 敵の位置 の差分を正規化で整えて * 4.0で方向と力を調整
+            Vector3 v = (transform.position - enemy.transform.position).normalized * 4.0f;
+            rbody.AddForce(v, ForceMode2D.Impulse);
+
+            // ダメージフラグをONにする ※硬直 FixedUpdateに影響が行く
+            inDamage = true;
+
+            // 時間差でダメージフラグをOFFに解除
+            Invoke("DamageEnd", 0.25f);
+        }
+        else
+        {
+            // ゲームオーバー
+            Debug.Log("ゲームオーバー");
+        }
+    }
+
+    // ダメージフラグを解除するメソッド
+    void DamageEnd()
+    {
+        inDamage = false; // フラグ解除
+        // プレイヤーの姿(SpriteRendererコンポーネント)を明確に表示状態にしておく
+        GetComponent<SpriteRenderer>().enabled = true;
     }
 }
