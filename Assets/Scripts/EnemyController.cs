@@ -33,6 +33,9 @@ public class EnemyController : MonoBehaviour
         // プレイヤーがいないときは何もしない
         if (player == null) return;
 
+        // 索敵
+        SearchPlayer();
+
         if (isActive)
         {
             // プレイヤーの方角をX成分、Y成分で取得
@@ -45,13 +48,6 @@ public class EnemyController : MonoBehaviour
             // 長辺を1として数値をおさえた際のXとYを求め直す
             axisH = Mathf.Cos(angle); // X方向
             axisV = Mathf.Sin(angle); // Y方向
-
-            SearchPlayer();
-        }
-        else
-        {
-            // 索敵
-            SearchPlayer();
         }
     }
 
@@ -60,7 +56,7 @@ public class EnemyController : MonoBehaviour
         if (isActive && hp > 0)
         {
             // Updateで求めたX成分、Y成分の値を使って実際に動かす
-            rbody.velocity = new Vector2(axisH, axisV) * speed;
+            rbody.velocity = new Vector2(axisH, axisV).normalized * speed;
         }
     }
 
@@ -93,9 +89,13 @@ public class EnemyController : MonoBehaviour
             {
                 GetComponent<CapsuleCollider2D>().enabled = false;
                 rbody.velocity = Vector2.zero;
-                GetComponent<Animator>().SetBool("death", true);
-                Destroy(gameObject, 1.0f);
+                GetComponent<Animator>().SetTrigger("death");
             }
         }
+    }
+
+    public void EnemyDestroy()
+    {
+        Destroy(gameObject);
     }
 }

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RobotDeath
+  m_Name: PlayerDeath
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -141,9 +141,9 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: e6ba455139ce4fd389d484b238670455, type: 3}
+      value: {fileID: -1160260486, guid: 51124fe952d24f744bf04a9b1509144f, type: 3}
     - time: 1.0166667
-      value: {fileID: 21300000, guid: e6ba455139ce4fd389d484b238670455, type: 3}
+      value: {fileID: -1160260486, guid: 51124fe952d24f744bf04a9b1509144f, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -202,8 +202,8 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: e6ba455139ce4fd389d484b238670455, type: 3}
-    - {fileID: 21300000, guid: e6ba455139ce4fd389d484b238670455, type: 3}
+    - {fileID: -1160260486, guid: 51124fe952d24f744bf04a9b1509144f, type: 3}
+    - {fileID: -1160260486, guid: 51124fe952d24f744bf04a9b1509144f, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -350,7 +350,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1.0166667
-    functionName: EnemyDestroy
+    functionName: PlayerDestroy
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

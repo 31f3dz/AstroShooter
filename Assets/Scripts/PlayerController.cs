@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameController.gameState != "playing" || inDamage) return;
+
+        // モバイルからの入力がない場合のみ
         if (!isMobileInput)
         {
             // 水平方向と垂直方向のキー入力を検知
@@ -42,9 +45,14 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameController.gameState != "playing") return;
+
         if (inDamage)
         {
             // 点滅処理
+            float value = Mathf.Sin(Time.time * 50); // valueに正負の波を作る ※Time.timeはゲームの経過時間
+            if (value > 0) GetComponent<SpriteRenderer>().enabled = true; // 絵を表示
+            else GetComponent<SpriteRenderer>().enabled = false; // 絵を表示
 
             return;
         }
@@ -145,7 +153,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             // ゲームオーバー
-            Debug.Log("ゲームオーバー");
+            GameOver();
         }
     }
 
@@ -155,5 +163,21 @@ public class PlayerController : MonoBehaviour
         inDamage = false; // フラグ解除
         // プレイヤーの姿(SpriteRendererコンポーネント)を明確に表示状態にしておく
         GetComponent<SpriteRenderer>().enabled = true;
+    }
+
+    void GameOver()
+    {
+        GameController.gameState = "gameover";
+        // ゲームオーバー演出
+        GetComponent<CircleCollider2D>().enabled = false; // コライダーなし
+        rbody.velocity = Vector2.zero; // 動きを止める
+        rbody.gravityScale = 1; // 重力発生
+        rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse); // 上に跳ね上げる
+        anime.SetTrigger("death"); // 死亡アニメの開始
+    }
+
+    public void PlayerDestroy()
+    {
+        Destroy(gameObject);
     }
 }
