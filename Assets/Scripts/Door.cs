@@ -25,6 +25,8 @@ public class Door : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ExistCheck(); // リストを見て、存在して良いかをチェック
+
         if (isGoldDoor) // もしも金の扉のフラグがあれば
         {
             // 見た目を変える
@@ -56,6 +58,12 @@ public class Door : MonoBehaviour
                     talking = true; // 会話モードON
                     GameController.gameState = "talk";
                     Time.timeScale = 0; // ゲーム進行を止める
+
+                    // 消費リストにまだ掲載されていなければリストアップ
+                    if (!SaveController.Instance.IsConsumed(this.tag, arrangeId))
+                    {
+                        SaveController.Instance.ConsumedEvent(this.tag, arrangeId);
+                    }
                 }
                 // 銀の扉
                 else if (!isGoldDoor && GameController.hasSilverKey > 0)
@@ -67,6 +75,12 @@ public class Door : MonoBehaviour
                     talking = true; // 会話モードON
                     GameController.gameState = "talk";
                     Time.timeScale = 0; // ゲーム進行を止める
+
+                    // 消費リストにまだ掲載されていなければリストアップ
+                    if (!SaveController.Instance.IsConsumed(this.tag, arrangeId))
+                    {
+                        SaveController.Instance.ConsumedEvent(this.tag, arrangeId);
+                    }
                 }
                 // いずれにしても鍵がない
                 else
@@ -108,6 +122,12 @@ public class Door : MonoBehaviour
             {
                 GameController.hasSilverKey--;
                 Destroy(gameObject);
+
+                // 消費リストにまだ掲載されていなければリストアップ
+                if (!SaveController.Instance.IsConsumed(this.tag, arrangeId))
+                {
+                    SaveController.Instance.ConsumedEvent(this.tag, arrangeId);
+                }
             }
 
             // 金の扉で、金の鍵を所持していたら
@@ -115,6 +135,12 @@ public class Door : MonoBehaviour
             {
                 GameController.hasGoldKey--;
                 Destroy(gameObject);
+
+                // 消費リストにまだ掲載されていなければリストアップ
+                if (!SaveController.Instance.IsConsumed(this.tag, arrangeId))
+                {
+                    SaveController.Instance.ConsumedEvent(this.tag, arrangeId);
+                }
             }
         }
     }
@@ -134,6 +160,14 @@ public class Door : MonoBehaviour
         if (isEkey && collision.gameObject.CompareTag("Player"))
         {
             inDoorArea = false; // ドアの領域から抜ける
+        }
+    }
+
+    void ExistCheck()
+    {
+        if (SaveController.Instance.IsConsumed(this.tag, arrangeId))
+        {
+            Destroy(gameObject);
         }
     }
 }

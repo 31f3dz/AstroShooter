@@ -22,6 +22,8 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ExistCheck(); // リストを見て、存在して良いかをチェック
+
         // Playerオブジェクトの取得
         player = GameObject.FindGameObjectWithTag("Player");
         rbody = GetComponent<Rigidbody2D>();
@@ -87,6 +89,12 @@ public class EnemyController : MonoBehaviour
 
             if (hp <= 0)
             {
+                // 消費リストにまだ掲載されていなければリストアップ
+                if (!SaveController.Instance.IsConsumed(this.tag, arrangeId))
+                {
+                    SaveController.Instance.ConsumedEvent(this.tag, arrangeId);
+                }
+
                 GetComponent<CapsuleCollider2D>().enabled = false;
                 rbody.velocity = Vector2.zero;
                 GetComponent<Animator>().SetTrigger("death");
@@ -97,5 +105,13 @@ public class EnemyController : MonoBehaviour
     public void EnemyDestroy()
     {
         Destroy(gameObject);
+    }
+
+    void ExistCheck()
+    {
+        if (SaveController.Instance.IsConsumed(this.tag, arrangeId))
+        {
+            Destroy(gameObject);
+        }
     }
 }

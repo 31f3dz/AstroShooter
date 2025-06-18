@@ -68,21 +68,26 @@ public class PlayerController : MonoBehaviour
         // アニメ番号を一時記録
         int dir = direction;
 
-        // if (angleZ > -135 && angleZ < -45) dir = 0; // 下
-        // else if (angleZ >= -45 && angleZ <= 45) dir = 3; // 右
-        // else if (angleZ > 45 && angleZ < 135) dir = 1; // 上
-        // else dir = 2; // 左
-
-        //左右キーが押されたら
-        if (Mathf.Abs(h) >= Mathf.Abs(v))
+        if (h == 0 && v == 0)
         {
-            if (h > 0) dir = 3;       // 右
-            else if (h < 0) dir = 2;  // 左
+            if (angleZ > -135 && angleZ < -45) dir = 0; // 下
+            else if (angleZ >= -45 && angleZ <= 45) dir = 3; // 右
+            else if (angleZ > 45 && angleZ < 135) dir = 1; // 上
+            else dir = 2; // 左
         }
-        else //左右キーが押されなかったら
+        else
         {
-            if (v > 0) dir = 1;       // 上
-            else if (v < 0) dir = 0;  // 下
+            // 左右キーが押されたら
+            if (Mathf.Abs(h) >= Mathf.Abs(v))
+            {
+                if (h > 0) dir = 3;       // 右
+                else if (h < 0) dir = 2;  // 左
+            }
+            else //左右キーが押されなかったら
+            {
+                if (v > 0) dir = 1;       // 上
+                else if (v < 0) dir = 0;  // 下
+            }
         }
 
         // 前フレームのdirectionとアニメ番号が異なっていなければそのまま
