@@ -923,7 +923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd5afbafda0191f41a5d3629729a1de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: RoomA
+  sceneName: Prologue
   continueButton: {fileID: 1318996130}
 --- !u!1 &1994522045
 GameObject:

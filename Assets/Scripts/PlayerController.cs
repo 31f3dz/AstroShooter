@@ -191,4 +191,19 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    // Mobile操作(MobileStick.csから呼び出されるメソッド)
+    public void MobileAxis(float x, float y)
+    {
+        axisH = x;
+        axisV = y;
+        if (axisH == 0 && axisV == 0)
+        {
+            isMobileInput = false;
+        }
+        else
+        {
+            isMobileInput = true;
+        }
+    }
 }

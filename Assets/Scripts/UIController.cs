@@ -118,6 +118,8 @@ public class UIController : MonoBehaviour
         // BGMをストップ
         SoundController.soundController.StopBgm();
 
+        if (PlayerPrefs.GetInt("Life") <= 0) PlayerPrefs.SetInt("Life", 5);
+
         SaveSystem.LoadGame();
     }
 }

@@ -9,15 +9,27 @@ EditorBuildSettings:
     path: Assets/Scenes/Title.unity
     guid: 4661d92ef6e6ab1479d3880b9bb0f2cf
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/Scenes/FloorA.unity
-    guid: a5bd7db64e9d4c54caa434982eb0f742
+    path: Assets/Scenes/Prologue.unity
+    guid: 3a1f67cced464de4eb7354eec4f6fb31
   - enabled: 1
     path: Assets/Scenes/RoomA.unity
     guid: 3d5d7a6882ba4ce438eea96c2ae66746
   - enabled: 1
+    path: Assets/Scenes/RoomB.unity
+    guid: b8befedfaec6e6446a0d675ee2570f98
+  - enabled: 1
+    path: Assets/Scenes/RoomC.unity
+    guid: ad8bdf0841f4d2d4ab3643692b71a113
+  - enabled: 1
+    path: Assets/Scenes/FloorA.unity
+    guid: a5bd7db64e9d4c54caa434982eb0f742
+  - enabled: 1
     path: Assets/Scenes/Boss.unity
     guid: 0bf221a3d456e7649986c59ee038ea37
+  - enabled: 1
+    path: Assets/Scenes/Ending.unity
+    guid: 295bab12fb1da19438fe09507885f03e
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects: {}

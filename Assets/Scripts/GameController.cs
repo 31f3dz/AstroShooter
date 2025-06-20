@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour
     public static int hasGoldKey; // 金の鍵の所持数
     public static int hasSilverKey; // 銀の鍵の所持数
 
+    // public static bool investigate; // 調べるモード
+
     // Start is called before the first frame update
     void Start()
     {
