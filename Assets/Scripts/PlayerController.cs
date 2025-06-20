@@ -179,6 +179,12 @@ public class PlayerController : MonoBehaviour
         rbody.gravityScale = 1; // 重力発生
         rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse); // 上に跳ね上げる
         anime.SetTrigger("death"); // 死亡アニメの開始
+
+        // BGM停止
+        SoundController.soundController.StopBgm();
+
+        // ゲームオーバーSEの再生
+        SoundController.soundController.SEPlay(SEType.GameOver);
     }
 
     public void PlayerDestroy()

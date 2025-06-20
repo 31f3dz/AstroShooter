@@ -18,6 +18,20 @@ public class RoomController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 現在のシーン名を取得
+        string scenename = SceneManager.GetActiveScene().name;
+
+        if (scenename == "Boss") // シーン名がボスのステージなら
+        {
+            // ボスのBGMを流す
+            SoundController.soundController.PlayBgm(BGMType.InBoss);
+        }
+        else
+        {
+            // 通常BGM
+            SoundController.soundController.PlayBgm(BGMType.InGame);
+        }
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         if (isContinue)

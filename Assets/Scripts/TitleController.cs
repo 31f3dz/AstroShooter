@@ -16,6 +16,9 @@ public class TitleController : MonoBehaviour
         string lastScene = PlayerPrefs.GetString("SaveScene");
         // なければコンティニューボタンを無効化
         if (lastScene == "") continueButton.interactable = false;
+
+        // タイトル曲を流す
+        SoundController.soundController.PlayBgm(BGMType.Title);
     }
 
     // Update is called once per frame

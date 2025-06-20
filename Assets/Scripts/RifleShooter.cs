@@ -71,6 +71,9 @@ public class RifleShooter : MonoBehaviour
 
         // 攻撃中フラグをOFFにするメソッドを時間差で発動
         Invoke("StopAttack", shootDelay);
+
+        // 攻撃のSEを再生
+        SoundController.soundController.SEPlay(SEType.Shoot);
     }
 
     // 攻撃中フラグをOFFにするメソッド
